@@ -1,0 +1,28 @@
+name: TestOutputs
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  buildimage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set timestamp
+        id: timestamp
+        run: echo "::set-output name=time::$(date +'%s')"
+
+    outputs:
+      timestamp: ${{ steps.timestamp.outputs.time }}
+  
+  builddeploy:
+    runs-on: ubuntu-latest
+    needs: buildimage
+    env: 
+      TIMEST: ${{needs.buildimage.outputs.timestamp}}
+    steps:
+      - run: echo $TIMEST
+    
