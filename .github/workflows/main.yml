@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: buildimage
     env: 
-      TIMEST: ${{needs.buildimage.outputs.time}}
+      TIMEST: ${{needs.buildimage.outputs.timestamp}}
     steps:
       - run: echo $TIMEST
     
